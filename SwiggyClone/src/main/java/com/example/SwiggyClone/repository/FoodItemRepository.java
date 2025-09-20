@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface FoodItemRepository extends JpaRepository<FoodItem, Long> {
     List<FoodItem> findByRestaurantId(Long restaurantId);
+
 }
