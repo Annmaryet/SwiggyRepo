@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,12 +23,13 @@ public class UserDTO {
     private String name;
 
     @Email(message = "Email must be valid")
+    @NotBlank(message = "Email is required")
     private String email;
 
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters long")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // ✅ Password should only be written, not read
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Prevents password from being sent in responses
     private String password;
 
-    private String role; // e.g., "ROLE_USER"
+    private Set<String> roles;
 }

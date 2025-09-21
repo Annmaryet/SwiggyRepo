@@ -1,5 +1,7 @@
 package com.example.SwiggyClone.service.impl;
 
+import com.example.SwiggyClone.dto.AuthRequest;
+import com.example.SwiggyClone.dto.AuthResponse;
 import com.example.SwiggyClone.dto.UserDTO;
 import com.example.SwiggyClone.entity.Role;
 import com.example.SwiggyClone.entity.User;
@@ -8,7 +10,10 @@ import com.example.SwiggyClone.exception.UserAlreadyExistsException;
 import com.example.SwiggyClone.repository.RoleRepository;
 import com.example.SwiggyClone.repository.UserRepository;
 import com.example.SwiggyClone.service.inter.UserService;
+import com.example.SwiggyClone.util.JwtUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,11 +26,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder; // ✅ For secure password hashing
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil; // Utility class to generate JWT tokens
 
     @Override
     @Transactional
@@ -34,10 +41,8 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("User with email " + userDTO.getEmail() + " already exists.");
         }
 
-        // Hash the password before saving
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
 
-        // Find and assign the default user role
         Role userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Error: Default role 'ROLE_USER' not found."));
         Set<Role> roles = new HashSet<>();
@@ -46,11 +51,12 @@ public class UserServiceImpl implements UserService {
         User newUser = User.builder()
                 .name(userDTO.getName())
                 .email(userDTO.getEmail())
-                .password(encodedPassword) // Save the hashed password
+                .password(encodedPassword)
                 .roles(roles)
                 .build();
 
         User savedUser = userRepository.save(newUser);
+        log.info("Registered new user: {}", savedUser.getEmail());
         return toDto(savedUser);
     }
 
@@ -64,6 +70,14 @@ public class UserServiceImpl implements UserService {
         }
 
         return toDto(user);
+    }
+
+    @Override
+    public AuthResponse authenticateUser(@Valid AuthRequest authRequest) {
+        UserDTO userDTO = authenticate(authRequest.getEmail(), authRequest.getPassword());
+        String token = jwtUtil.generateToken(userDTO.getEmail());
+        log.info("User authenticated: {}", userDTO.getEmail());
+        return new AuthResponse(token, "Authentication successful", userDTO);
     }
 
     @Override
@@ -86,11 +100,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
+        if (!user.getEmail().equals(userDTO.getEmail()) && userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new UserAlreadyExistsException("Email " + userDTO.getEmail() + " is already in use.");
+        }
+
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        // Do not update password here unless it's a specific password change endpoint
+        // Password update should be handled in a separate endpoint
 
         User updatedUser = userRepository.save(user);
+        log.info("Updated user: {}", updatedUser.getEmail());
         return toDto(updatedUser);
     }
 
@@ -100,20 +119,20 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
+        log.info("Deleted user with id: {}", id);
     }
 
-    // ================== PRIVATE MAPPING ==================
+    // ================== PRIVATE MAPPINGS ==================
     private UserDTO toDto(User user) {
-        String role = user.getRoles().stream()
-                .findFirst()
+        Set<String> roles = user.getRoles().stream()
                 .map(Role::getName)
-                .orElse(null);
+                .collect(Collectors.toSet());
 
         return UserDTO.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .role(role)
+                .roles(roles) // Corrected from .role(roles)
                 .build();
     }
 }
