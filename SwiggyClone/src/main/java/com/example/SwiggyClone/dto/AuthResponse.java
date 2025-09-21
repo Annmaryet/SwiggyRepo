@@ -8,7 +8,11 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class AuthResponse {
+
     private String token;
-    private String role;
+
     private String message;
+
+    // CORRECTED: This field now correctly matches what your service provides.
+    private UserDTO user;
 }
