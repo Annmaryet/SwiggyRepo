@@ -9,6 +9,6 @@ import lombok.*;
 public class MenuItemDTO {
     private Long id;
     private String name;
-    private Double price;
+    private double price;
     private Long restaurantId;
 }

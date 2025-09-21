@@ -3,7 +3,7 @@ package com.example.SwiggyClone.service.impl;
 import com.example.SwiggyClone.dto.FoodItemDTO;
 import com.example.SwiggyClone.entity.FoodItem;
 import com.example.SwiggyClone.entity.Restaurant;
-import com.example.SwiggyClone.ResourceNotFoundException;
+import com.example.SwiggyClone.exception.ResourceNotFoundException;
 import com.example.SwiggyClone.repository.FoodItemRepository;
 import com.example.SwiggyClone.repository.RestaurantRepository;
 import com.example.SwiggyClone.service.inter.FoodItemService;

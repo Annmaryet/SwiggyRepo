@@ -1,4 +1,4 @@
-package com.example.SwiggyClone;
+package com.example.SwiggyClone.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

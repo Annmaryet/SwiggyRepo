@@ -16,3 +16,4 @@ public class FoodItemDTO {
     private double price;
     private Long restaurantId;
 }
+// we can add avalability

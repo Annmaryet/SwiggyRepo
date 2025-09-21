@@ -9,6 +9,9 @@ public interface OrderItemService {
 
     List<OrderItemDTO> getAllOrderItems();
 
+    // ADDED: A crucial method to get all items for a specific order.
+    List<OrderItemDTO> getOrderItemsByOrderId(Long orderId);
+
     OrderItemDTO getOrderItemById(Long id);
 
     OrderItemDTO updateOrderItem(Long id, OrderItemDTO orderItemDTO);
