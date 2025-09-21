@@ -1,0 +1,91 @@
+Of course! Congratulations on putting all the pieces together. Based on the entities and services we've built, here is a complete table mapping diagram and a description of the project's workflow.
+
+Database Table Mapping (ERD) 🗺️
+This diagram shows the final database tables and how they are all connected. The relationships (like one-to-one or one-to-many) are the foundation of the application's logic.
+
+Here is a breakdown of the key relationships:
+
+From Table	To Table	Relationship	Foreign Key / Join Table	Description
+users	roles	Many-to-Many	user_roles	A user can be a customer and an admin; a role can have many users.
+users	carts	One-to-One	carts.user_id	Each user has their own dedicated shopping cart.
+users	orders	One-to-Many	orders.user_id	A user can place many different orders over time.
+users	notifications	One-to-Many	notifications.user_id	A user receives multiple notifications (order updates, promotions).
+restaurants	food_items	One-to-Many	food_items.restaurant_id	A restaurant offers many different food items on its menu.
+carts	cart_items	One-to-Many	cart_items.cart_id	A cart can hold many different food items.
+food_items	cart_items	One-to-Many	cart_items.food_item_id	A specific food item can be in many different users' carts.
+orders	order_items	One-to-Many	order_items.order_id	An order is composed of the specific items that were purchased.
+orders	payments	One-to-One	payments.order_id	Each order has exactly one payment associated with it.
+food_items	order_items	One-to-Many	order_items.food_item_id	A food item can be part of many different historical orders.
+
+Export to Sheets
+Project Workflow ⚙️
+This is the logical flow of how a user interacts with the application and how the different services you built work together to make it happen.
+
+1. Authentication & Setup
+Action: A new user registers.
+
+Backend Flow:
+
+The request hits UserController.
+
+UserServiceImpl is called. It hashes the password, assigns the default "ROLE_USER", and saves the new User to the database.
+
+A corresponding empty Cart is automatically created and linked to the user.
+
+2. Browsing & Adding to Cart
+Action: The user browses restaurants and adds a food item to their cart.
+
+Backend Flow:
+
+RestaurantController provides a list of Restaurant entities and their associated FoodItems.
+
+When an item is added, CartController is called.
+
+CartServiceImpl finds the user's Cart, creates a new CartItem (or updates the quantity if it already exists), and links it to the selected FoodItem.
+
+3. Placing an Order
+Action: The user reviews their cart and clicks "Place Order".
+
+Backend Flow:
+
+The request hits OrderController with the userId.
+
+OrderServiceImpl orchestrates the checkout process:
+
+It calls CartService to get all CartItems for the user.
+
+It creates a new Order entity, linking it to the User and calculating the totalAmount.
+
+It converts each CartItem into a new OrderItem and links them to the new Order.
+
+It saves the Order and all its OrderItems in a single transaction.
+
+Finally, it calls CartService again to clear all CartItems from the user's Cart.
+
+4. Processing Payment
+Action: The user is redirected to the payment screen and submits their payment details.
+
+Backend Flow:
+
+PaymentController receives the orderId and payment method.
+
+PaymentServiceImpl takes over:
+
+It fetches the Order from the database to get the trusted totalAmount.
+
+It creates a Payment record, links it to the Order, and sets the status to "SUCCESS".
+
+It updates the Order status from "PLACED" to "PAID".
+
+5. Sending Notifications
+Action: The system automatically informs the user about their order progress.
+
+Backend Flow:
+
+The NotificationServiceImpl is called by other services at key moments:
+
+After OrderService successfully creates an order, it calls notificationService.sendOrderConfirmation(...).
+
+After PaymentService successfully processes a payment, it calls notificationService.sendOrderStatusUpdate(...) with the "PAID" status.
+
+The service creates a Notification entity with a formatted message and saves it for the user.
