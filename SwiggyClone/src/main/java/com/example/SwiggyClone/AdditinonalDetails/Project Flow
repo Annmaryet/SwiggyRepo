@@ -9,6 +9,8 @@ Backend Flow:
 
 The request hits UserController.
 
+
+
 UserServiceImpl is called. It hashes the password, assigns the default "ROLE_USER", and saves the new User to the database.
 
 A corresponding empty Cart is automatically created and linked to the user.
