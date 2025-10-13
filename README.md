@@ -71,8 +71,8 @@ cd SwiggyClone/backend
     # DATABASE CONFIGURATION
     # --------------------------------------------------
     spring.datasource.url=jdbc:mysql://localhost:3306/swiggyclone
-    spring.datasource.username=YOUR_MYSQL_USERNAME
-    spring.datasource.password=YOUR_MYSQL_PASSWORD
+    spring.datasource.username=root
+    spring.datasource.password=12345
     
     # Hibernate Properties
     spring.jpa.hibernate.ddl-auto=update
