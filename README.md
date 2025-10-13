@@ -61,7 +61,7 @@ cd SwiggyClone/backend
 ### 2. Database Configuration
 1.  Access your MySQL instance and create a new database schema.
     ```sql
-    CREATE DATABASE swiggy_clone_db;
+    CREATE DATABASE swiggyclone;
     ```
 2.  Navigate to the configuration file at `src/main/resources/application.properties`.
 3.  Update the datasource properties with your local MySQL username and password.
@@ -70,7 +70,7 @@ cd SwiggyClone/backend
     # --------------------------------------------------
     # DATABASE CONFIGURATION
     # --------------------------------------------------
-    spring.datasource.url=jdbc:mysql://localhost:3306/swiggy_clone_db
+    spring.datasource.url=jdbc:mysql://localhost:3306/swiggyclone
     spring.datasource.username=YOUR_MYSQL_USERNAME
     spring.datasource.password=YOUR_MYSQL_PASSWORD
     
