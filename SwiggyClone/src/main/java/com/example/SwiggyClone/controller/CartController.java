@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartService cartService;
+    private final CartService cartService;    //IOC
 
     @GetMapping("/{userId}")
     public ResponseEntity<CartDTO> getCart(@PathVariable Long userId) {
@@ -40,3 +40,13 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
+//Div obj = new Div();
+
+
+
+
+
+
+
