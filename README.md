@@ -1,5 +1,11 @@
 # 🍔 Swiggy Clone - Backend API
 
+## 🚀 Live Demo
+
+* **Live API Base URL**: `https://swiggyclone-backend-production-1234.up.railway.app`
+* **API Documentation (Swagger UI)**: `https://swiggyclone-backend-production-1234.up.railway.app/swagger-ui.html`
+
+
 ![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring_Security-6.x-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
@@ -134,7 +140,7 @@ src/main/java/com/example/SwiggyClone
 ├── service/
 │   ├── impl/     # Service layer implementations
 │   └── inter/    # Service layer interfaces
-├── config/       # Spring configuration (e.g., Security)
+├── config/       # Spring configuration (e..g., Security)
 ├── util/         # Utility classes (e.g., JwtUtil)
 └── SwiggyCloneApplication.java
 ```
