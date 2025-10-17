@@ -1,5 +1,11 @@
 # 🍔 Swiggy Clone - Backend API
 
+## 🚀 Live Demo
+
+* **Live API Base URL**: `https://swiggyclone-backend-production-1234.up.railway.app`
+* **API Documentation (Swagger UI)**: `https://swiggyclone-backend-production-1234.up.railway.app/swagger-ui.html`
+
+
 ![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring_Security-6.x-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
@@ -33,14 +39,14 @@ This project is built upon a classic **Layered Architecture** to ensure a clean 
 
 ## 🛠️ Technology Stack
 
-| Category                | Technology                                                               |
-| ----------------------- | ------------------------------------------------------------------------ |
-| **Framework** | Spring Boot 3.x                                                          |
-| **Security** | Spring Security 6.x, JSON Web Tokens (JWT)                               |
-| **Database** | Spring Data JPA, Hibernate, MySQL 8.x                                    |
-| **API & Documentation** | Spring Web (REST Controllers), SpringDoc OpenAPI (Swagger UI)            |
-| **Build Tool** | Apache Maven                                                             |
-| **Utilities** | Lombok, Spring Boot DevTools                                             |
+| Category | Technology |
+| :--- | :--- |
+| **Framework** | Spring Boot 3.x |
+| **Security** | Spring Security 6.x, JSON Web Tokens (JWT) |
+| **Database** | Spring Data JPA, Hibernate, MySQL 8.x |
+| **API & Documentation** | Spring Web (REST Controllers), SpringDoc OpenAPI (Swagger UI) |
+| **Build Tool** | Apache Maven |
+| **Utilities** | Lombok, Spring Boot DevTools |
 
 ---
 ## 🚀 Environment Setup & Installation
@@ -102,19 +108,19 @@ This project uses **SpringDoc OpenAPI** to generate live API documentation. Once
 <details>
 <summary><strong>Click to expand API Endpoint Summary</strong></summary>
 
-| HTTP Method | Endpoint                       | Description                            | Access      |
-| :---------- | :----------------------------- | :------------------------------------- | :---------- |
-| `POST`      | `/api/auth/register`           | Register a new user.                   | Public      |
-| `POST`      | `/api/auth/login`              | Authenticate a user and get a JWT.     | Public      |
-| `GET`       | `/api/users`                   | Get a list of all users.               | Admin only  |
-| `GET`       | `/api/users/{id}`              | Get a user by their ID.                | Admin/Owner |
-| `POST`      | `/api/admin/restaurants`       | Add a new restaurant.                  | Admin only  |
-| `GET`       | `/api/restaurants`             | Get a list of all restaurants.         | Public      |
-| `POST`      | `/api/cart/add`                | Add an item to the user's cart.        | User        |
-| `GET`       | `/api/cart/{userId}`           | Get the user's current cart.           | User        |
-| `POST`      | `/api/orders/user/{userId}`    | Create an order from the user's cart.  | User        |
-| `GET`       | `/api/orders/user/{userId}`    | Get the order history for a user.      | User        |
-| `POST`      | `/api/payments/process`        | Process the payment for an order.      | User        |
+| HTTP Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Register a new user. | Public |
+| `POST` | `/api/auth/login` | Authenticate a user and get a JWT. | Public |
+| `GET` | `/api/users` | Get a list of all users. | Admin only |
+| `GET` | `/api/users/{id}` | Get a user by their ID. | Admin/Owner |
+| `POST` | `/api/admin/restaurants` | Add a new restaurant. | Admin only |
+| `GET` | `/api/restaurants` | Get a list of all restaurants. | Public |
+| `POST` | `/api/cart/add` | Add an item to the user's cart. | User |
+| `GET` | `/api/cart/{userId}` | Get the user's current cart. | User |
+| `POST` | `/api/orders/user/{userId}` | Create an order from the user's cart. | User |
+| `GET` | `/api/orders/user/{userId}` | Get the order history for a user. | User |
+| `POST` | `/api/payments/process` | Process the payment for an order. | User |
 
 </details>
 
@@ -134,7 +140,7 @@ src/main/java/com/example/SwiggyClone
 ├── service/
 │   ├── impl/     # Service layer implementations
 │   └── inter/    # Service layer interfaces
-├── config/       # Spring configuration (e.g., Security)
+├── config/       # Spring configuration (e..g., Security)
 ├── util/         # Utility classes (e.g., JwtUtil)
 └── SwiggyCloneApplication.java
 ```
